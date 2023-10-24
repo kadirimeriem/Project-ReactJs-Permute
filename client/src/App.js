@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as XLSX from 'xlsx';
 import { Navbar, Container, Nav } from 'react-bootstrap';
-
+import { useNavigate } from "react-router-dom";
 
 function App() {
 
@@ -47,6 +47,9 @@ function App() {
     }
   }
 
+  const token = localStorage.getItem('token');
+const navigate = useNavigate();
+
   return (
     <div className="wrapper">
       {/* Barre de navigation 1 (fond sombre) */}
@@ -57,7 +60,11 @@ function App() {
             <Nav.Link href="#home">Accueil</Nav.Link>
             <Nav.Link href="#features">Inscription</Nav.Link>
             <Nav.Link href="#pricing">Apropos</Nav.Link>
-            <Nav.Link href="#pricing">Se connecter</Nav.Link>
+
+            {token ?  <button onClick={()=>{
+              localStorage.removeItem('token');
+              navigate('login');
+          }}>Log out</button>  : <Nav.Link href="/login">Login</Nav.Link> }
           </Nav>
         </Container>
       </Navbar>
